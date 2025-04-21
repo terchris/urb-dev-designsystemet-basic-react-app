@@ -134,3 +134,19 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Added from template designsystemet-basic-react-app
+package-lock.json
+yarn.lock
+dist/
+build/
+out/
+.next/
+.nuxt/
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+.docker/

@@ -39,7 +39,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 # - jc: Converts command-line tool output to JSON for easier parsing.
 # - xdg-utils: Contains utilities like `xdg-open` to open URLs or files, enabling users to click links in the container.
 
-
 # Install packages - Note that sudo is already configured in the base image for vscode user
 RUN sudo apt-get update && \
     sudo apt-get install -y --no-install-recommends \
@@ -79,15 +78,29 @@ ENV PATH=/usr/local/bin:$PATH
 # Install Azure CLI
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
-# Install PowerShell
+# Install PowerShell - Universal approach for both ARM64 and x86_64
 RUN cd /tmp && \
+    # First try the Microsoft repo method which works for x86_64/amd64
     wget -q https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb && \
     sudo dpkg -i packages-microsoft-prod.deb && \
     sudo apt-get update && \
-    sudo apt-get install -y powershell && \
-    sudo rm packages-microsoft-prod.deb && \
+    # Try to install powershell package - if it fails, it's likely ARM64
+    if sudo apt-get install -y powershell; then \
+        echo "PowerShell installed via apt"; \
+    else \
+        # Fallback to direct binary installation for ARM64
+        echo "PowerShell apt installation failed, trying binary installation for ARM64" && \
+        ARCH=$(dpkg --print-architecture) && \
+        PWSH_VERSION="7.4.1" && \
+        wget -q "https://github.com/PowerShell/PowerShell/releases/download/v${PWSH_VERSION}/powershell-${PWSH_VERSION}-linux-${ARCH}.tar.gz" && \
+        sudo mkdir -p /opt/microsoft/powershell/7 && \
+        sudo tar zxf "powershell-${PWSH_VERSION}-linux-${ARCH}.tar.gz" -C /opt/microsoft/powershell/7 && \
+        sudo chmod +x /opt/microsoft/powershell/7/pwsh && \
+        sudo ln -sf /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh && \
+        rm "powershell-${PWSH_VERSION}-linux-${ARCH}.tar.gz"; \
+    fi && \
+    sudo rm -f packages-microsoft-prod.deb && \
     sudo apt-get clean && \
     sudo rm -rf /var/lib/apt/lists/*
 
 ENV DEBIAN_FRONTEND=
-

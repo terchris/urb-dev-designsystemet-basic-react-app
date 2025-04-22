@@ -25,31 +25,34 @@ spec:
     spec:
       containers:
         - name: "urb-dev-designsystemet-basic-react-app"
-          image: ghcr.io/terchris/urb-dev-designsystemet-basic-react-app:3f50a2a-20250422155452
+          image: ghcr.io/terchris/urb-dev-designsystemet-basic-react-app:903d1ba-20250422141234
           ports:
             - containerPort: 3000
-          # minimal resources as this is just a test            
+          # Increased memory limits to prevent OOMKilled          
           resources:
             limits:
+              cpu: "200m"
+              memory: "256Mi"
+            requests:
               cpu: "100m"
               memory: "128Mi"
-            requests:
-              cpu: "50m"
-              memory: "64Mi"
+          # More generous probe configuration
           livenessProbe:
             httpGet:
               path: /
               port: 3000
-            initialDelaySeconds: 60  # Increased from 30
-            periodSeconds: 15        # Increased from 10
-            timeoutSeconds: 5        # Added timeout
+            initialDelaySeconds: 90
+            periodSeconds: 20
+            timeoutSeconds: 10
+            failureThreshold: 6
           readinessProbe:
             httpGet:
               path: /
               port: 3000
-            initialDelaySeconds: 30  # Increased from 5
-            periodSeconds: 10        # Increased from 5
-            timeoutSeconds: 5        # Added timeout
+            initialDelaySeconds: 60
+            periodSeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 6
 ---
 apiVersion: v1
 kind: Service

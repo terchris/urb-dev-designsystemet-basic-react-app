@@ -42,7 +42,7 @@ function App() {
           Using <Link href="https://github.com/digdir/designsystemet" target="_blank">Digdir Designsystemet</Link>
         </Heading>
         <Heading level={3} data-size="sm">
-          Urbalurba TemplatE: designsystemet-basic-react-app
+          Urbalurba TemPlatE: designsystemet-basic-react-app
         </Heading>
       </header>
       <main>

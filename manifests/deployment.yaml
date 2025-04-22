@@ -40,14 +40,16 @@ spec:
             httpGet:
               path: /
               port: 3000
-            initialDelaySeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 60  # Increased from 30
+            periodSeconds: 15        # Increased from 10
+            timeoutSeconds: 5        # Added timeout
           readinessProbe:
             httpGet:
               path: /
               port: 3000
-            initialDelaySeconds: 5
-            periodSeconds: 5
+            initialDelaySeconds: 30  # Increased from 5
+            periodSeconds: 10        # Increased from 5
+            timeoutSeconds: 5        # Added timeout
 ---
 apiVersion: v1
 kind: Service

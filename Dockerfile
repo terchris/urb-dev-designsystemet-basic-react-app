@@ -24,6 +24,9 @@ WORKDIR /app
 # Copy only the built assets
 COPY --from=builder /app/dist ./dist
 
+# Create a serve configuration file for SPA routing
+RUN echo '{"trailingSlash": false, "rewrites": [{"source": "**", "destination": "/index.html"}]}' > serve.json
+
 # Install serve with specific version for consistency
 RUN npm install -g serve@14.2.1
 
@@ -32,6 +35,6 @@ USER node
 
 EXPOSE 3000
 
-# Corrected: Use a single `-l` parameter with host:port format
-# This is the correct syntax for serve version 14.2.1
-CMD ["serve", "-s", "dist", "-l", "tcp://0.0.0.0:3000"]
+# Added "-c serve.json" for proper SPA routing
+# This ensures all routes redirect to index.html for client-side routing
+CMD ["serve", "-s", "dist", "-l", "tcp://0.0.0.0:3000", "-c", "serve.json"]

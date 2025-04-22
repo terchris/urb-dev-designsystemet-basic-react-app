@@ -32,8 +32,6 @@ USER node
 
 EXPOSE 3000
 
-# Modified: Added '--listen 0.0.0.0' to explicitly bind to all network interfaces
-# This ensures the server is accessible from outside the container
-# Without this parameter, serve defaults to localhost/127.0.0.1 which isn't accessible 
-# to Kubernetes probes coming from outside the container
-CMD ["serve", "-s", "dist", "-l", "3000", "--listen", "0.0.0.0"]
+# Corrected: Use a single `-l` parameter with host:port format
+# This is the correct syntax for serve version 14.2.1
+CMD ["serve", "-s", "dist", "-l", "tcp://0.0.0.0:3000"]

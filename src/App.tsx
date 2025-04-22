@@ -4,7 +4,7 @@
  * @author [@terchris]
  */
 
-import { Heading } from '@digdir/designsystemet-react';
+import { Heading, Link } from '@digdir/designsystemet-react';
 import '@digdir/designsystemet-css/index.css';
 import '@digdir/designsystemet-theme';
 import { BlogCard } from './components/BlogCard/BlogCard';
@@ -35,8 +35,11 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <Heading level={1} data-size="xl">
-          Designsystemet Blog
+        <Heading level={1} data-size="2xl">
+          Basic React App
+        </Heading>
+        <Heading level={2} data-size="md">
+          Using <Link href="https://github.com/digdir/designsystemet" target="_blank">Digdir Designsystemet</Link>
         </Heading>
       </header>
       <main>

@@ -25,7 +25,8 @@ WORKDIR /app
 COPY --from=builder /app/dist ./dist
 
 # Create a serve configuration file for SPA routing
-RUN echo '{"trailingSlash": false, "rewrites": [{"source": "**", "destination": "/index.html"}]}' > serve.json
+# Place it inside the dist directory since that's where serve looks for it
+RUN echo '{"trailingSlash": false, "rewrites": [{"source": "**", "destination": "/index.html"}]}' > dist/serve.json
 
 # Install serve with specific version for consistency
 RUN npm install -g serve@14.2.1
@@ -35,6 +36,5 @@ USER node
 
 EXPOSE 3000
 
-# Added "-c serve.json" for proper SPA routing
-# This ensures all routes redirect to index.html for client-side routing
-CMD ["serve", "-s", "dist", "-l", "tcp://0.0.0.0:3000", "-c", "serve.json"]
+# Using just the -s parameter, serve will automatically find serve.json in the served directory
+CMD ["serve", "-s", "dist", "-l", "tcp://0.0.0.0:3000"]

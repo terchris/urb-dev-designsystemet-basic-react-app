@@ -41,6 +41,9 @@ function App() {
         <Heading level={2} data-size="md">
           Using <Link href="https://github.com/digdir/designsystemet" target="_blank">Digdir Designsystemet</Link>
         </Heading>
+        <Heading level={3} data-size="sm">
+          Urbalurba template: designsystemet-basic-react-app
+        </Heading>
       </header>
       <main>
         {/* Grid container for blog post cards */}

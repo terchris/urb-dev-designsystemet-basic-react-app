@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: "urb-dev-designsystemet-basic-react-app"
-          image: ghcr.io/terchris/urb-dev-designsystemet-basic-react-app:f5feeff-20250422144732
+          image: ghcr.io/terchris/urb-dev-designsystemet-basic-react-app:8d7b380-20250422145223
           ports:
             - containerPort: 3000
           # minimal resources as this is just a test            

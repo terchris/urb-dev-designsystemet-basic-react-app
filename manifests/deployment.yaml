@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: "urb-dev-designsystemet-basic-react-app"
-          image: ghcr.io/terchris/urb-dev-designsystemet-basic-react-app:8ac8597-20250422164225
+          image: ghcr.io/terchris/urb-dev-designsystemet-basic-react-app:3d7261d-20250423104454
           ports:
             - containerPort: 3000
           # Increased memory limits to prevent OOMKilled          
